@@ -48,9 +48,9 @@ export function Hero() {
               className="display-7 text-ink"
               style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
             >
-              Fantasy basketball,
+              The bracket. The boards.
               <br />
-              <span className="italic text-accent">played for keeps.</span>
+              <span className="italic text-accent">The room.</span>
             </motion.h1>
 
             <motion.p
@@ -59,10 +59,9 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 max-w-xl text-[17px] leading-[1.6] text-ink-soft"
             >
-              The FBI World Cup, dynasty &amp; redraft leagues that fill before
-              the season starts, and tools built by people who win their own
-              leagues — not slide decks pretending to. Eight years on Discord,
-              still no funnel.
+              The FBI World Cup is the centerpiece. The dynasty rankings are
+              the boards everyone quotes. The Discord is the room behind both.
+              Eight years live, no funnel, no newsletter shake.
             </motion.p>
 
             <motion.div
