@@ -8,38 +8,23 @@ import {
 } from "@/lib/nav";
 import { Seal, SealWatermark } from "@/components/ui/seal";
 
-const COLOPHON = [
-  { k: "Built", v: "Next.js 16 · React 19" },
-  { k: "Type", v: "Source Serif 4 · Bricolage · IBM Plex Mono" },
-  { k: "Hosted", v: "Vercel — Toronto / Sydney edges" },
-  { k: "Established", v: "Year of our Lord 2018" },
-];
-
 export function SiteFooter() {
   return (
     <footer className="relative z-[2] mt-32 overflow-hidden border-t border-rule bg-canvas-soft">
       <SealWatermark className="-right-32 -bottom-40 -rotate-12 hidden md:block" />
 
       <div className="relative mx-auto max-w-[1440px] px-6 py-20 md:px-10">
-        {/* Massive serif tagline as the footer header — editorial */}
-        <div className="grid gap-10 border-b border-rule pb-16 lg:grid-cols-[1fr_auto]">
+        {/* Editorial tagline */}
+        <div className="flex flex-col items-start justify-between gap-10 border-b border-rule pb-16 lg:flex-row lg:items-end">
           <h2 className="display-5 max-w-3xl text-ink">
             The world&apos;s premier{" "}
             <span className="italic text-accent">fantasy basketball</span>{" "}
             community.
           </h2>
-          <div className="flex items-end gap-6">
-            <Seal size={72} />
-            <div>
-              <div className="label">Volume 8 · 2026</div>
-              <div className="mt-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
-                Toronto / Sydney
-              </div>
-            </div>
-          </div>
+          <Seal size={64} />
         </div>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div className="mt-16 grid gap-12 lg:grid-cols-[2fr_1fr_1fr]">
           {/* Manifesto */}
           <div>
             <div className="label label-accent">Manifesto</div>
@@ -59,7 +44,6 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Nav columns */}
           <div>
             <div className="label">Sections</div>
             <ul className="mt-5 space-y-3">
@@ -105,19 +89,6 @@ export function SiteFooter() {
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Colophon */}
-          <div>
-            <div className="label">Colophon</div>
-            <dl className="mt-5 space-y-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-mute">
-              {COLOPHON.map((c) => (
-                <div key={c.k}>
-                  <dt className="text-ink-dim">{c.k}</dt>
-                  <dd className="mt-1 text-ink-soft">{c.v}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
 
