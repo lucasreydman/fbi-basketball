@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { LEAGUE_OFFERINGS } from "@/lib/data/leagues";
 import { Dot } from "@/components/ui/badge";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { EditorialHeader, EditorialSection } from "./editorial-section";
 
 const STATUS_DOT: Record<string, "accent" | "positive" | "dim"> = {
@@ -23,7 +22,7 @@ export function LeaguesStrip() {
   return (
     <EditorialSection>
       <EditorialHeader
-        number="§ 01"
+        number="§ 02"
         marker="Leagues"
         title={
           <>

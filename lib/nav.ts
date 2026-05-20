@@ -1,12 +1,11 @@
 export type NavItem = { href: string; label: string };
 
 export const PRIMARY_NAV: NavItem[] = [
-  { href: "/leagues", label: "Leagues" },
   { href: "/world-cup", label: "World Cup" },
+  { href: "/leagues", label: "Leagues" },
   { href: "/tools", label: "Tools" },
-  { href: "/podcasts", label: "Podcasts" },
-  { href: "/content", label: "Content" },
   { href: "/creators", label: "Creators" },
+  { href: "/content", label: "Content" },
   { href: "/store", label: "Store" },
 ];
 

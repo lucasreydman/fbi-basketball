@@ -17,8 +17,8 @@ export function WorldCupBanner() {
           {/* Left — editorial header + format */}
           <div className="lg:col-span-7">
             <div className="flex items-baseline gap-4 border-b border-rule pb-5">
-              <span className="font-mono text-[11px] tabular text-accent">§ 02</span>
-              <span className="label label-accent">FBI World Cup · 2026</span>
+              <span className="font-mono text-[11px] tabular text-accent">§ 01</span>
+              <span className="label label-accent">FBI World Cup · 2026 · the centerpiece</span>
             </div>
             <Reveal>
               <h2 className="display-6 mt-8 max-w-3xl text-ink">
@@ -31,7 +31,7 @@ export function WorldCupBanner() {
                 The only competitive dynasty bracket that runs invite-only.
                 Registration opens September — the waitlist is already 80 deep.
                 If you placed top-4 in any FBI league last year, you have
-                priority.
+                priority. This is the room.
               </p>
             </Reveal>
 

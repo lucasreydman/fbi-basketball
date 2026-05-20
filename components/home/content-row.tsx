@@ -13,14 +13,14 @@ export function ContentRow() {
   return (
     <EditorialSection className="border-t border-rule bg-canvas-soft">
       <EditorialHeader
-        number="§ 06"
+        number="§ 05"
         marker="Latest content"
         title={
           <>
             Writing that <span className="italic text-accent">holds up at the deadline.</span>
           </>
         }
-        lede="Strategy, rankings explainers, World Cup recaps, community pieces. Free to read. No paywall, no email-gate."
+        lede="Strategy, rankings explainers, World Cup recaps, community pieces — pulled from the creators' own Substacks and the league commissioners' notes. Free to read."
         cta={{ href: "/content", label: "All posts" }}
       />
 

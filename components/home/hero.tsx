@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import NumberFlow from "@number-flow/react";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Seal } from "@/components/ui/seal";
 import { Container } from "@/components/ui/container";
 import { DISCORD_URL } from "@/lib/nav";
@@ -59,9 +59,10 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 max-w-xl text-[17px] leading-[1.6] text-ink-soft"
             >
-              Dynasty &amp; redraft leagues that fill before the season starts.
-              The FBI World Cup. Three pods worth listening to. Tools built
-              by people who win their own leagues — not slide decks pretending to.
+              The FBI World Cup, dynasty &amp; redraft leagues that fill before
+              the season starts, and tools built by people who win their own
+              leagues — not slide decks pretending to. Eight years on Discord,
+              still no funnel.
             </motion.p>
 
             <motion.div
@@ -70,22 +71,22 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
               className="mt-10 flex flex-wrap items-center gap-4"
             >
+              <Link
+                href="/world-cup"
+                className="group inline-flex h-12 items-center gap-2 bg-accent px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] duration-200 hover:bg-accent-bright active:scale-[0.98]"
+              >
+                World Cup ’26
+                <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
               <a
                 href={DISCORD_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex h-12 items-center gap-2 bg-accent px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] duration-200 hover:bg-accent-bright active:scale-[0.98]"
-              >
-                Join the Discord
-                <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <Link
-                href="/world-cup"
                 className="group inline-flex h-12 items-center gap-2 border border-rule px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-ink transition-[border-color,color] hover:border-accent hover:text-accent-bright"
               >
-                World Cup ’26
+                Join the Discord
                 <ArrowUpRight size={14} className="text-ink-mute transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+              </a>
             </motion.div>
           </div>
 

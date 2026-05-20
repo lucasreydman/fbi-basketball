@@ -44,10 +44,10 @@ export function SiteFooter() {
           <div>
             <div className="label label-accent">Manifesto</div>
             <p className="mt-5 max-w-md text-[15px] leading-[1.65] text-ink-soft">
-              FBI has been the basketball room for managers who take this
-              seriously, but not so seriously they stop laughing.
-              Dynasty &amp; redraft leagues that actually fill. A World Cup
-              that means something. Three pods. One Discord that runs the day.
+              FBI is the basketball room for managers who take this seriously,
+              but not so seriously they stop laughing. Dynasty &amp; redraft
+              leagues that actually fill. A World Cup that means something.
+              Three creators worth following. One Discord that runs the day.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               <FootBtn href={DISCORD_URL} primary>

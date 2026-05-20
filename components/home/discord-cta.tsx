@@ -14,7 +14,7 @@ export function DiscordCta() {
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <div className="flex items-baseline gap-4 border-b border-rule pb-5">
-              <span className="font-mono text-[11px] tabular text-accent">§ 07</span>
+              <span className="font-mono text-[11px] tabular text-accent">§ 06</span>
               <span className="label label-accent">The room itself</span>
             </div>
             <Reveal>
