@@ -11,6 +11,10 @@ const PLATFORM_LABEL: Record<FollowLink["platform"], string> = {
   Substack: "Substack",
   X: "X",
   YouTube: "YouTube",
+  RotoWire: "RotoWire",
+  RotoBaller: "RotoBaller",
+  Bluesky: "Bluesky",
+  Linktree: "Linktree",
 };
 
 export function CreatorsRow() {
@@ -25,7 +29,7 @@ export function CreatorsRow() {
             <span className="italic text-accent">Subscribe to the source.</span>
           </>
         }
-        lede="The people behind the rankings, the bracket, and every take that runs the day. Their individual work is worth following — separately, and on its own terms."
+        lede="The people behind the rankings, the bracket, and every take that runs the day. Each of them publishes on a different platform — Patreon, Substack, RotoWire, X — whichever one's yours, subscribe direct."
         cta={{ href: "/creators", label: "Full bios" }}
       />
 

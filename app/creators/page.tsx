@@ -10,6 +10,10 @@ const PLATFORM_LABEL: Record<FollowLink["platform"], string> = {
   Substack: "Substack",
   X: "X / Twitter",
   YouTube: "YouTube",
+  RotoWire: "RotoWire",
+  RotoBaller: "RotoBaller",
+  Bluesky: "Bluesky",
+  Linktree: "Linktree",
 };
 
 export default function CreatorsPage() {
@@ -24,7 +28,7 @@ export default function CreatorsPage() {
             <span className="italic text-accent">the takes.</span>
           </>
         }
-        lede="Their work stands on its own. Subscribe to whichever feed is yours — Patreon for the publish-day rankings, Substack for the longer analytical pieces, X for everything else."
+        lede="Their work stands on its own — and lives in different rooms. Matt publishes on Patreon and Substack. Adam writes for RotoWire and RotoBaller. Brendan runs the FBI Discord and the X feed. Pick the room you read in and subscribe direct."
       />
 
       <Container size="lg" className="py-20 md:py-28 space-y-28">
