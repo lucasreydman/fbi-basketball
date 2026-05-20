@@ -1,6 +1,6 @@
 export type FollowLink = {
   label: string;
-  platform: "Patreon" | "Substack" | "X" | "YouTube" | "RotoWire" | "RotoBaller" | "Bluesky" | "Linktree";
+  platform: "Patreon" | "Substack" | "X" | "YouTube" | "RotoWire" | "RotoBaller" | "Bluesky" | "Linktree" | "Ko-fi";
   url: string;
   primary?: boolean;
 };
@@ -23,9 +23,10 @@ export const CREATORS: Creator[] = [
     role: "Founder · Re-Draft Lead",
     bio: "Built FBI from a Discord server into the largest fantasy basketball community on the internet. Runs the World Cup. Drives the re-draft content + league formats.",
     longBio:
-      "Brendan founded FBI in 2018 because every other fantasy basketball community he found was either too redraft-pilled or too far up the analytics rabbit hole to be useful at 11 PM the night before your trade deadline. Eight years later FBI runs the most competitive invite-only dynasty bracket in the format, plus a Discord that's a full-time job to moderate. He runs the World Cup, designs the re-draft formats, and probably knows your starting lineup better than you do. His content lives inside the FBI Discord and the X feed — no separate paywall.",
+      "Brendan founded FBI in 2018 because every other fantasy basketball community he found was either too redraft-pilled or too far up the analytics rabbit hole to be useful at 11 PM the night before your trade deadline. Eight years later FBI runs the largest re-draft tournament in the format — the FBI World Cup — plus a Discord that's a full-time job to moderate. He designs the formats, runs the bracket, and probably knows your starting lineup better than you do. His Ko-fi is the easiest way to support the work directly.",
     links: [
-      { label: "Follow on X", platform: "X", url: "https://x.com/HiddenUpside", primary: true },
+      { label: "Support on Ko-fi", platform: "Ko-fi", url: "https://ko-fi.com/bdub1", primary: true },
+      { label: "Follow on X", platform: "X", url: "https://x.com/HiddenUpside" },
     ],
   },
   {

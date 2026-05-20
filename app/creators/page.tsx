@@ -14,6 +14,7 @@ const PLATFORM_LABEL: Record<FollowLink["platform"], string> = {
   RotoBaller: "RotoBaller",
   Bluesky: "Bluesky",
   Linktree: "Linktree",
+  "Ko-fi": "Ko-fi",
 };
 
 export default function CreatorsPage() {
@@ -28,7 +29,7 @@ export default function CreatorsPage() {
             <span className="italic text-accent">the takes.</span>
           </>
         }
-        lede="Their work stands on its own — and lives in different rooms. Matt publishes on Patreon and Substack. Adam writes for RotoWire and RotoBaller. Brendan runs the FBI Discord and the X feed. Pick the room you read in and subscribe direct."
+        lede="Their work stands on its own — and lives in different rooms. Matt publishes on Patreon and Substack. Adam writes for RotoWire and RotoBaller. Brendan runs the FBI Discord and posts the bracket — Ko-fi is the way to back him directly. Pick the room you read in and subscribe direct."
       />
 
       <Container size="lg" className="py-20 md:py-28 space-y-28">

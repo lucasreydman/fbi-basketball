@@ -15,6 +15,7 @@ const PLATFORM_LABEL: Record<FollowLink["platform"], string> = {
   RotoBaller: "RotoBaller",
   Bluesky: "Bluesky",
   Linktree: "Linktree",
+  "Ko-fi": "Ko-fi",
 };
 
 export function CreatorsRow() {

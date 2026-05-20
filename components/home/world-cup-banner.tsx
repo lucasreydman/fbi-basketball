@@ -22,27 +22,27 @@ export function WorldCupBanner() {
             </div>
             <Reveal>
               <h2 className="display-6 mt-8 max-w-3xl text-ink">
-                Twelve teams. Five seasons of receipts.{" "}
-                <span className="italic text-accent">One bracket.</span>
+                576 teams. 48 divisions.{" "}
+                <span className="italic text-accent">One champion.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-xl text-[16px] leading-[1.65] text-ink-soft">
-                The only competitive dynasty bracket that runs invite-only.
-                Registration opens September — the waitlist is already 80 deep.
-                If you placed top-4 in any FBI league last year, you have
-                priority. This is the room.
+                The largest 9-cat re-draft tournament in the format. Three phases.
+                Two re-drafts. One champion crowned across 48 divisions of 12 teams
+                each. $21 to enter. ${WORLD_CUP_FORMAT.prizePool.toLocaleString()}+
+                in prizes. Registration opens September.
               </p>
             </Reveal>
 
             <Reveal delay={0.18}>
               <dl className="mt-10 grid max-w-xl grid-cols-2 gap-x-8 gap-y-5 border-t border-rule pt-7">
                 <Spec label="Format" value={WORLD_CUP_FORMAT.format} />
-                <Spec label="Teams" value={`${WORLD_CUP_FORMAT.teams}`} />
-                <Spec label="Draft" value={WORLD_CUP_FORMAT.draftType} />
-                <Spec label="Playoffs" value={WORLD_CUP_FORMAT.playoffs} />
-                <Spec label="Season" value={WORLD_CUP_FORMAT.regularSeason} />
-                <Spec label="Fees" value={WORLD_CUP_FORMAT.fees} />
+                <Spec label="Per division" value={`${WORLD_CUP_FORMAT.teamsPerDivision} teams`} />
+                <Spec label="Divisions" value={`${WORLD_CUP_FORMAT.divisions}`} />
+                <Spec label="Phases" value={`${WORLD_CUP_FORMAT.phases} · ${WORLD_CUP_FORMAT.reDrafts} re-drafts`} />
+                <Spec label="Entry" value={`$${WORLD_CUP_FORMAT.entryFee}`} />
+                <Spec label="Prizes" value={`$${WORLD_CUP_FORMAT.prizePool.toLocaleString()}+`} />
               </dl>
             </Reveal>
 
@@ -56,40 +56,40 @@ export function WorldCupBanner() {
                   <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
                 <Link
-                  href="/world-cup#history"
+                  href="/world-cup#format"
                   className="inline-flex h-12 items-center gap-2 border border-rule px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:border-accent hover:text-ink"
                 >
-                  Past champions
+                  How phases work
                 </Link>
               </div>
             </Reveal>
           </div>
 
-          {/* Right — defending champion plaque */}
+          {/* Right — scale plaque */}
           <Reveal delay={0.3} className="lg:col-span-5">
             <aside className="relative h-full border border-accent/30 bg-[var(--accent-soft-bg)] p-8 md:p-10">
-              <div className="label label-accent">Defending Champion</div>
+              <div className="label label-accent">Scale · 2026</div>
 
-              <h3 className="display-5 mt-6 text-ink">Phoenix Pythons</h3>
-              <div className="mt-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
-                Mortimer Reeves · 2025
+              <div className="mt-6">
+                <BigStat value={576} suffix=" teams" />
+                <div className="mt-7 grid grid-cols-2 gap-6 border-t border-accent/30 pt-7">
+                  <ChampStat label="Divisions" value={48} display="number" />
+                  <ChampStat label="Phases" value={3} display="number" />
+                  <ChampStat label="Re-drafts" value={2} display="number" />
+                  <ChampStat label="Champion" value="1" display="raw" />
+                </div>
               </div>
 
-              <p className="mt-7 text-[14.5px] leading-[1.65] text-ink-soft">
-                Reeves rode an SGA / Wembanyama core to a four-round bracket
-                sweep. The 1,247.2 in the final is the third-highest finals
-                total in tournament history.
-              </p>
-
-              <dl className="mt-9 grid grid-cols-3 gap-6 border-t border-accent/30 pt-7">
-                <ChampStat label="Final score" value={1247.2} display="number" />
-                <ChampStat label="Margin" value="+48.6" display="raw" />
-                <ChampStat label="MVP" value="SGA" display="raw" />
-              </dl>
+              <div className="mt-9 border-t border-accent/30 pt-6">
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/80">
+                  Prize pool
+                </div>
+                <BigStat value={11_500} prefix="$" suffix="+" />
+              </div>
 
               <div className="absolute -right-4 -top-4 hidden lg:block">
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
-                  Inducted ’25
+                  #FBIWorldCup
                 </div>
               </div>
             </aside>
@@ -135,11 +135,37 @@ function ChampStat({
         }}
       >
         {display === "number" && typeof value === "number" ? (
-          <NumberFlow value={value} format={{ minimumFractionDigits: 1 }} />
+          <NumberFlow value={value} />
         ) : (
           value
         )}
       </div>
+    </div>
+  );
+}
+
+function BigStat({
+  value,
+  prefix,
+  suffix,
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+}) {
+  return (
+    <div
+      className="mt-3 font-display tabular text-ink"
+      style={{
+        fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+        lineHeight: 0.95,
+        fontWeight: 400,
+        fontVariationSettings: '"opsz" 96',
+      }}
+    >
+      {prefix && <span className="text-accent">{prefix}</span>}
+      <NumberFlow value={value} />
+      {suffix && <span className="text-accent">{suffix}</span>}
     </div>
   );
 }
