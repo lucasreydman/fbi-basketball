@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/hero";
+import { TickerTape } from "@/components/home/ticker-tape";
 import { LeaguesStrip } from "@/components/home/leagues-strip";
 import { WorldCupBanner } from "@/components/home/world-cup-banner";
 import { ToolsPreview } from "@/components/home/tools-preview";
@@ -11,6 +12,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <TickerTape />
       <LeaguesStrip />
       <WorldCupBanner />
       <ToolsPreview />

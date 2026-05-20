@@ -1,121 +1,152 @@
+"use client";
+
 import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
+import NumberFlow from "@number-flow/react";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Seal } from "@/components/ui/seal";
+import { Container } from "@/components/ui/container";
 import { DISCORD_URL } from "@/lib/nav";
 
 export function Hero() {
+  const reduce = useReducedMotion();
+
   return (
-    <section className="arena-spotlight relative overflow-hidden border-b border-rule">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-20 pt-20 sm:pt-28 lg:grid-cols-12">
-        <div className="lg:col-span-7">
-          <div className="label-mono flex items-center gap-3 text-orange">
-            <span className="h-1.5 w-1.5 rounded-full bg-orange" aria-hidden />
-            est. 2018 · 12k+ Discord members
+    <section className="relative overflow-hidden border-b border-rule">
+      <div className="spotlight absolute inset-0" aria-hidden />
+      <div className="hardwood absolute inset-0 opacity-50" aria-hidden />
+
+      <Container size="2xl" className="relative pt-16 md:pt-24 pb-20 md:pb-28">
+        {/* Edition slug — top-of-page identifier */}
+        <motion.div
+          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-between border-b border-rule pb-4"
+        >
+          <div className="flex items-center gap-6">
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-dim">
+              Vol. 8 · Issue 21 · 2026.05
+            </span>
+            <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden />
+            <span className="hidden sm:block font-mono text-[10.5px] uppercase tracking-[0.22em] text-accent">
+              World Cup ’26 · Registration · September
+            </span>
           </div>
-          <h1
-            className="display-h1 mt-6 text-bone"
-            style={{ fontSize: "clamp(2.75rem, 6.5vw, 5.25rem)" }}
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-dim">
+            ISSN 0000-FBI
+          </span>
+        </motion.div>
+
+        {/* Headline grid */}
+        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-8">
+            <motion.h1
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="display-7 text-ink"
+              style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
+            >
+              Fantasy basketball,
+              <br />
+              <span className="italic text-accent">played for keeps.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 max-w-xl text-[17px] leading-[1.6] text-ink-soft"
+            >
+              Dynasty &amp; redraft leagues that fill before the season starts.
+              The FBI World Cup. Three pods worth listening to. Tools built
+              by people who win their own leagues — not slide decks pretending to.
+            </motion.p>
+
+            <motion.div
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-10 flex flex-wrap items-center gap-4"
+            >
+              <a
+                href={DISCORD_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex h-12 items-center gap-2 bg-accent px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] duration-200 hover:bg-accent-bright active:scale-[0.98]"
+              >
+                Join the Discord
+                <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <Link
+                href="/world-cup"
+                className="group inline-flex h-12 items-center gap-2 border border-rule px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-ink transition-[border-color,color] hover:border-accent hover:text-accent-bright"
+              >
+                World Cup ’26
+                <ArrowUpRight size={14} className="text-ink-mute transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Sidebar — the giant seal, treated as a printed stamp */}
+          <motion.aside
+            initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.94, rotate: -3 }}
+            animate={{ opacity: 1, scale: 1, rotate: -6 }}
+            transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden lg:flex lg:col-span-4 items-center justify-center"
           >
-            Fantasy basketball,{" "}
-            <span className="italic text-orange">played for keeps.</span>
-          </h1>
-          <p className="mt-7 max-w-xl text-[16px] leading-relaxed text-ash">
-            Dynasty &amp; redraft leagues that actually fill, the FBI World Cup,
-            three pods worth listening to, and tools built by people who win
-            their own leagues. No Substack-grade hot takes. No analytics
-            wallpaper. Just the stuff that holds up at the trade deadline.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href={DISCORD_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="bg-orange px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.24em] text-obsidian transition-colors hover:bg-orange-bright"
-              style={{ borderRadius: 2 }}
-            >
-              Join the Discord →
-            </a>
-            <Link
-              href="/world-cup"
-              className="border border-rule px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.24em] text-bone transition-colors hover:border-orange"
-              style={{ borderRadius: 2 }}
-            >
-              The 2026 World Cup
-            </Link>
-          </div>
-
-          <div className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-rule pt-8">
-            <Stat label="Years running" value="8" />
-            <Stat label="Leagues filled" value="40+" />
-            <Stat label="World Cups" value="5" />
-          </div>
+            <div className="relative">
+              <Seal size={300} className="opacity-95" />
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
+                Stamped 2018 · Renewed 2026
+              </div>
+            </div>
+          </motion.aside>
         </div>
 
-        <aside className="lg:col-span-5">
-          <div className="court-card overflow-hidden" style={{ borderRadius: 3 }}>
-            <div className="border-b border-rule px-5 py-3.5">
-              <div className="label-mono text-orange">Now on air</div>
-            </div>
-            <div className="space-y-4 p-5">
-              {[
-                { tag: "BD", title: "Trade Deadline Fallout", show: "Balls Deep · ep 184", time: "1h 12m" },
-                { tag: "ND", title: "The 2027 Rookie Tier Reset", show: "NBA Dynasty · ep 96", time: "52m" },
-                { tag: "TML", title: "Pick Inflation — The Math", show: "Tank Me Later · ep 41", time: "1h 17m" },
-              ].map((ep) => (
-                <Link
-                  key={ep.title}
-                  href="/podcasts"
-                  className="group flex items-center gap-4 border border-rule p-3 transition-colors hover:border-orange"
-                  style={{ borderRadius: 2 }}
-                >
-                  <div
-                    className="flex h-12 w-12 shrink-0 items-center justify-center bg-orange/12 font-mono text-[11px] font-bold tracking-tight text-orange"
-                    style={{ borderRadius: 2 }}
-                  >
-                    {ep.tag}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="truncate text-[13.5px] text-bone group-hover:text-orange-bright">
-                      {ep.title}
-                    </div>
-                    <div className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ash-dim">
-                      {ep.show} · {ep.time}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="border-t border-rule px-5 py-3 text-center">
-              <Link
-                href="/podcasts"
-                className="font-mono text-[11px] uppercase tracking-[0.22em] text-ash transition-colors hover:text-orange"
-              >
-                All shows →
-              </Link>
-            </div>
-          </div>
-        </aside>
-      </div>
+        {/* Stat strip — almanac numbers across the bottom */}
+        <motion.dl
+          initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-20 grid grid-cols-2 gap-px overflow-hidden border-y border-rule sm:grid-cols-4"
+        >
+          <Stat label="Years live" value={8} suffix="" />
+          <Stat label="Active leagues" value={42} suffix="+" />
+          <Stat label="Discord members" value={12} suffix="K+" />
+          <Stat label="World Cups" value={5} suffix=" / 5" />
+        </motion.dl>
+      </Container>
     </section>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+  suffix,
+}: {
+  label: string;
+  value: number;
+  suffix: string;
+}) {
   return (
-    <div>
-      <div
-        className="font-display tabular text-bone"
+    <div className="flex flex-col gap-4 bg-canvas px-6 py-7">
+      <span className="label">{label}</span>
+      <span
+        className="font-display text-ink"
         style={{
-          fontSize: "2rem",
-          lineHeight: 1,
-          fontWeight: 500,
+          fontSize: "clamp(2.25rem, 4vw, 3.25rem)",
+          lineHeight: 0.9,
+          fontWeight: 400,
           fontVariationSettings: '"opsz" 96',
         }}
       >
-        {value}
-      </div>
-      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ash-dim">
-        {label}
-      </div>
+        <NumberFlow value={value} />
+        <span className="text-accent">{suffix}</span>
+      </span>
     </div>
   );
 }

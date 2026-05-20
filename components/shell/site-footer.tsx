@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Wordmark } from "@/components/brand/wordmark";
 import {
   PRIMARY_NAV,
   DISCORD_URL,
@@ -7,123 +6,155 @@ import {
   YOUTUBE_URL,
   EMAIL_URL,
 } from "@/lib/nav";
+import { Seal, SealWatermark } from "@/components/ui/seal";
+
+const COLOPHON = [
+  { k: "Built", v: "Next.js 16 · React 19" },
+  { k: "Type", v: "Source Serif 4 · Bricolage · IBM Plex Mono" },
+  { k: "Hosted", v: "Vercel — Toronto / Sydney edges" },
+  { k: "Established", v: "Year of our Lord 2018" },
+];
 
 export function SiteFooter() {
   return (
-    <footer className="relative z-[2] mt-24 border-t border-rule bg-canvas-soft">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="lg:col-span-2">
-          <Wordmark size="md" />
-          <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-ash">
-            The world&apos;s premier fantasy basketball community. Dynasty &
-            redraft leagues, the FBI World Cup, three pods, and a full toolkit
-            for serious managers.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={DISCORD_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="bg-orange px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-orange-bright"
-              style={{ borderRadius: 2 }}
-            >
-              Discord
-            </a>
-            <a
-              href={TWITTER_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="border border-rule px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ash transition-colors hover:border-orange hover:text-bone"
-              style={{ borderRadius: 2 }}
-            >
-              X / Twitter
-            </a>
-            <a
-              href={YOUTUBE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="border border-rule px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ash transition-colors hover:border-orange hover:text-bone"
-              style={{ borderRadius: 2 }}
-            >
-              YouTube
-            </a>
-            <a
-              href={EMAIL_URL}
-              className="border border-rule px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ash transition-colors hover:border-orange hover:text-bone"
-              style={{ borderRadius: 2 }}
-            >
-              Email
-            </a>
+    <footer className="relative z-[2] mt-32 overflow-hidden border-t border-rule bg-canvas-soft">
+      <SealWatermark className="-right-32 -bottom-40 -rotate-12 hidden md:block" />
+
+      <div className="relative mx-auto max-w-[1440px] px-6 py-20 md:px-10">
+        {/* Massive serif tagline as the footer header — editorial */}
+        <div className="grid gap-10 border-b border-rule pb-16 lg:grid-cols-[1fr_auto]">
+          <h2 className="display-5 max-w-3xl text-ink">
+            The world&apos;s premier{" "}
+            <span className="italic text-accent">fantasy basketball</span>{" "}
+            community.
+          </h2>
+          <div className="flex items-end gap-6">
+            <Seal size={72} />
+            <div>
+              <div className="label">Volume 8 · 2026</div>
+              <div className="mt-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
+                Toronto / Sydney
+              </div>
+            </div>
           </div>
         </div>
 
-        <div>
-          <div className="label-mono">Explore</div>
-          <ul className="mt-4 space-y-2.5">
-            {PRIMARY_NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-[14px] text-ash transition-colors hover:text-bone"
-                >
-                  {item.label}
+        <div className="mt-16 grid gap-12 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+          {/* Manifesto */}
+          <div>
+            <div className="label label-accent">Manifesto</div>
+            <p className="mt-5 max-w-md text-[15px] leading-[1.65] text-ink-soft">
+              FBI has been the basketball room for managers who take this
+              seriously, but not so seriously they stop laughing.
+              Dynasty &amp; redraft leagues that actually fill. A World Cup
+              that means something. Three pods. One Discord that runs the day.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-2">
+              <FootBtn href={DISCORD_URL} primary>
+                Discord
+              </FootBtn>
+              <FootBtn href={TWITTER_URL}>X / Twitter</FootBtn>
+              <FootBtn href={YOUTUBE_URL}>YouTube</FootBtn>
+              <FootBtn href={EMAIL_URL}>Email</FootBtn>
+            </div>
+          </div>
+
+          {/* Nav columns */}
+          <div>
+            <div className="label">Sections</div>
+            <ul className="mt-5 space-y-3">
+              {PRIMARY_NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-[14px] text-ink-mute transition-colors hover:text-ink"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div className="label">Community</div>
+            <ul className="mt-5 space-y-3 text-[14px] text-ink-mute">
+              <li>
+                <Link href="/world-cup" className="hover:text-ink">
+                  FBI World Cup
                 </Link>
               </li>
-            ))}
-          </ul>
+              <li>
+                <Link href="/creators" className="hover:text-ink">
+                  Meet the creators
+                </Link>
+              </li>
+              <li>
+                <Link href="/leagues" className="hover:text-ink">
+                  Run with us
+                </Link>
+              </li>
+              <li>
+                <a
+                  href={DISCORD_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-ink"
+                >
+                  Join the Discord
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Colophon */}
+          <div>
+            <div className="label">Colophon</div>
+            <dl className="mt-5 space-y-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-mute">
+              {COLOPHON.map((c) => (
+                <div key={c.k}>
+                  <dt className="text-ink-dim">{c.k}</dt>
+                  <dd className="mt-1 text-ink-soft">{c.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
 
-        <div>
-          <div className="label-mono">Community</div>
-          <ul className="mt-4 space-y-2.5">
-            <li>
-              <a
-                href={DISCORD_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="text-[14px] text-ash transition-colors hover:text-bone"
-              >
-                Join the Discord
-              </a>
-            </li>
-            <li>
-              <Link
-                href="/world-cup"
-                className="text-[14px] text-ash transition-colors hover:text-bone"
-              >
-                FBI World Cup
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/creators"
-                className="text-[14px] text-ash transition-colors hover:text-bone"
-              >
-                Meet the creators
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/leagues"
-                className="text-[14px] text-ash transition-colors hover:text-bone"
-              >
-                Run with us
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-rule">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-3 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash-dim">
-            © Fantasy Basketball International 2026 · est. 2018
+        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-rule pt-6 sm:flex-row sm:items-center">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
+            © Fantasy Basketball International · 2018 — 2026
           </p>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash-dim">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
             Built by community, for community.
           </p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FootBtn({
+  href,
+  children,
+  primary,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel="noreferrer"
+      className={
+        primary
+          ? "inline-flex h-9 items-center gap-2 bg-accent px-4 font-mono text-[10.5px] uppercase tracking-[0.22em] text-accent-ink transition-colors hover:bg-accent-bright"
+          : "inline-flex h-9 items-center gap-2 border border-rule px-4 font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:border-accent hover:text-ink"
+      }
+    >
+      {children}
+    </a>
   );
 }

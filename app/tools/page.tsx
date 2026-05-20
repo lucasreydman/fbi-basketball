@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { ALL_ACCESS_DEMO_URL, DISCORD_URL } from "@/lib/nav";
 import { PageHeader } from "@/components/ui/page-header";
+import { Container } from "@/components/ui/container";
 
 export const metadata = {
-  title: "Tools · FBI",
+  title: "Tools",
   description:
     "Dynasty rankings, trade calculator, and the rest of the toolkit. Free for the community.",
 };
@@ -18,6 +20,7 @@ const TOOLS = [
     status: "Live · v37 published 2026-05-18",
     href: `${ALL_ACCESS_DEMO_URL}/rankings/points`,
     cta: "Open the board",
+    live: true,
   },
   {
     slug: "trade-calculator",
@@ -28,6 +31,7 @@ const TOOLS = [
     status: "Live · linked to v37",
     href: `${ALL_ACCESS_DEMO_URL}/trade-calculator`,
     cta: "Run a trade",
+    live: true,
   },
   {
     slug: "schedule-strength",
@@ -38,7 +42,7 @@ const TOOLS = [
     status: "Q3 2026",
     href: "#",
     cta: "Coming soon",
-    disabled: true,
+    live: false,
   },
   {
     slug: "league-sync",
@@ -49,7 +53,7 @@ const TOOLS = [
     status: "Q4 2026",
     href: "#",
     cta: "Coming soon",
-    disabled: true,
+    live: false,
   },
   {
     slug: "draft-mock",
@@ -60,7 +64,7 @@ const TOOLS = [
     status: "Q4 2026",
     href: "#",
     cta: "Coming soon",
-    disabled: true,
+    live: false,
   },
   {
     slug: "punt-builder",
@@ -71,7 +75,7 @@ const TOOLS = [
     status: "Q1 2027",
     href: "#",
     cta: "Coming soon",
-    disabled: true,
+    live: false,
   },
 ];
 
@@ -79,85 +83,88 @@ export default function ToolsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="The toolkit"
+        number="§ 03"
+        marker="The toolkit · free"
         title={
           <>
-            Built so you can <span className="italic text-orange">stop using a spreadsheet.</span>
+            Built so you can{" "}
+            <span className="italic text-accent">stop using a spreadsheet.</span>
           </>
         }
-        description="Two tools live today, four on the roadmap. Everything anchored to Matt's published values and the FBI community's standards. Free, no email-gate."
+        lede="Two tools live today, four on the roadmap. Everything anchored to Matt's published values and the FBI community's standards. Free, no email-gate."
       />
 
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((t) => (
-            <Card key={t.slug} tool={t} />
+      <Container size="2xl" className="py-20 md:py-24">
+        <div className="grid gap-px overflow-hidden border border-rule bg-rule md:grid-cols-2 lg:grid-cols-3">
+          {TOOLS.map((t, i) => (
+            <ToolCard key={t.slug} index={i} tool={t} />
           ))}
         </div>
 
-        <div className="mt-16 border border-rule p-8 text-center" style={{ borderRadius: 3 }}>
-          <div className="label-mono text-orange">Want a tool that isn&apos;t here?</div>
-          <h3 className="display-h2 mt-3 text-[1.5rem] text-bone">
+        <div className="mt-16 border border-rule p-10 text-center bg-canvas-soft">
+          <div className="label label-accent">Want a tool that isn&apos;t here?</div>
+          <h3 className="display-3 mt-4 text-ink">
             Drop the idea in the Discord. We build what people actually use.
           </h3>
           <a
             href={DISCORD_URL}
             target="_blank"
             rel="noreferrer"
-            className="mt-6 inline-block bg-orange px-6 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-orange-bright"
-            style={{ borderRadius: 2 }}
+            className="group mt-8 inline-flex h-12 items-center gap-2 bg-accent px-7 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] hover:bg-accent-bright active:scale-[0.98]"
           >
-            Request a tool →
+            Request a tool
+            <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
-      </section>
+      </Container>
     </>
   );
 }
 
-type ToolCard = (typeof TOOLS)[number];
-
-function Card({ tool }: { tool: ToolCard }) {
-  const live = !("disabled" in tool && tool.disabled);
+function ToolCard({ tool, index }: { tool: (typeof TOOLS)[number]; index: number }) {
   return (
-    <div className="court-card flex flex-col p-7" style={{ borderRadius: 3 }}>
-      <div className="flex items-center justify-between">
-        <div className={`font-mono text-[10px] uppercase tracking-[0.22em] ${live ? "text-orange" : "text-ash-dim"}`}>
-          {live ? "Live" : "Roadmap"}
-        </div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-ash-dim">{tool.status}</div>
+    <div className="group relative flex flex-col gap-6 bg-canvas-soft p-7 md:p-9 transition-colors hover:bg-surface">
+      <div className="flex items-baseline justify-between">
+        <span className="font-mono text-[10px] tabular text-ink-dim">
+          {String(index + 1).padStart(2, "0")} / {String(TOOLS.length).padStart(2, "0")}
+        </span>
+        <span className={`font-mono text-[10px] uppercase tracking-[0.22em] ${tool.live ? "text-accent" : "text-ink-dim"}`}>
+          {tool.live ? "● Live" : "○ Roadmap"}
+        </span>
       </div>
 
-      <h3 className="display-h3 mt-5 text-[1.5rem] text-bone">{tool.title}</h3>
-      <p className="mt-3 flex-1 text-[13.5px] leading-relaxed text-ash">{tool.blurb}</p>
+      <div>
+        <h3 className="display-3 text-ink">{tool.title}</h3>
+        <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute">
+          {tool.status}
+        </div>
+      </div>
 
-      <div className="mt-5 flex flex-wrap gap-2">
+      <p className="text-[14px] leading-[1.65] text-ink-soft flex-1">{tool.blurb}</p>
+
+      <div className="flex flex-wrap gap-2">
         {tool.surfaces.map((s) => (
           <span
             key={s}
-            className="border border-rule px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ash"
-            style={{ borderRadius: 2 }}
+            className="border border-rule px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ink-mute"
           >
             {s}
           </span>
         ))}
       </div>
 
-      {live ? (
+      {tool.live ? (
         <Link
           href={tool.href}
           target="_blank"
           rel="noreferrer"
-          className="mt-7 inline-block bg-orange py-2.5 text-center font-mono text-[11px] uppercase tracking-[0.22em] text-obsidian transition-colors hover:bg-orange-bright"
-          style={{ borderRadius: 2 }}
+          className="group/cta inline-flex h-11 items-center justify-center gap-2 bg-accent px-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] hover:bg-accent-bright active:scale-[0.98]"
         >
-          {tool.cta} →
+          {tool.cta}
+          <ArrowUpRight size={13} className="transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
         </Link>
       ) : (
-        <span
-          className="mt-7 inline-block border border-rule py-2.5 text-center font-mono text-[11px] uppercase tracking-[0.22em] text-ash-dim"
-          style={{ borderRadius: 2 }}
-        >
+        <span className="inline-flex h-11 items-center justify-center border border-rule font-mono text-[11px] uppercase tracking-[0.22em] text-ink-dim">
           {tool.cta}
         </span>
       )}

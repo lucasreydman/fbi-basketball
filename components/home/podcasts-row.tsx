@@ -1,67 +1,73 @@
+"use client";
+
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { PODCASTS } from "@/lib/data/podcasts";
-import { SectionHeading } from "./section-heading";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { EditorialHeader, EditorialSection } from "./editorial-section";
 
 export function PodcastsRow() {
   return (
-    <section className="border-t border-rule bg-canvas-soft">
-      <div className="mx-auto max-w-7xl px-6 py-20">
-        <SectionHeading
-          eyebrow="Three pods. One feed."
-          title={
-            <>
-              The shows that <span className="italic text-orange">anchor the week.</span>
-            </>
-          }
-          description="Balls Deep is the flagship. NBA Dynasty is Matt's deep-dive ranking work. Tank Me Later is the rebuild bible. New episode every couple of days."
-          cta={{ href: "/podcasts", label: "All episodes" }}
-        />
+    <EditorialSection className="bg-canvas-soft border-t border-rule">
+      <EditorialHeader
+        number="§ 04"
+        marker="Three pods · one feed"
+        title={
+          <>
+            The shows that <span className="italic text-accent">anchor the week.</span>
+          </>
+        }
+        lede="Balls Deep is the flagship. NBA Dynasty is Matt's deep-dive on the rankings. Tank Me Later is the rebuild bible. New episode every couple of days."
+        cta={{ href: "/podcasts", label: "All episodes" }}
+      />
 
-        <div className="grid gap-px overflow-hidden border border-rule md:grid-cols-3" style={{ borderRadius: 3 }}>
-          {PODCASTS.map((p) => (
+      <Stagger className="mt-16 grid gap-px overflow-hidden border border-rule bg-rule md:grid-cols-3">
+        {PODCASTS.map((p, i) => (
+          <StaggerItem key={p.slug}>
             <Link
-              key={p.slug}
               href={`/podcasts#${p.slug}`}
-              className="group flex flex-col bg-canvas p-6 transition-colors hover:bg-surface"
+              className="group relative flex h-full flex-col gap-6 bg-canvas p-7 transition-colors hover:bg-canvas-soft"
             >
-              <div
-                className="flex h-14 w-14 items-center justify-center bg-orange/15 font-mono text-[14px] font-bold tracking-tight text-orange"
-                style={{ borderRadius: 3 }}
-              >
-                {p.cover}
+              <div className="flex items-start justify-between">
+                <span className="font-mono text-[10px] tabular text-ink-dim">
+                  {String(i + 1).padStart(2, "0")} / 03
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute">
+                  {p.cadence.split(" · ")[0]}
+                </span>
               </div>
-              <h3 className="display-h3 mt-5 text-[1.5rem] text-bone group-hover:text-orange-bright">
-                {p.name}
-              </h3>
-              <p className="mt-3 text-[13.5px] leading-relaxed text-ash">{p.tagline}</p>
 
-              <div className="mt-5 border-t border-rule pt-4">
-                <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-ash-dim">
-                  Latest episode
+              <div className="flex items-start gap-5">
+                <div
+                  className="flex h-16 w-16 shrink-0 items-center justify-center border border-accent/30 bg-[var(--accent-soft-bg)] font-display text-[20px] text-accent"
+                  style={{ fontVariationSettings: '"opsz" 36', fontWeight: 500 }}
+                >
+                  {p.cover}
                 </div>
-                <div className="mt-2 text-[14px] leading-snug text-bone">
+                <div>
+                  <h3 className="display-3 text-[1.6rem] text-ink group-hover:text-accent-bright transition-colors">
+                    {p.name}
+                  </h3>
+                  <p className="mt-2 text-[13.5px] leading-[1.55] text-ink-soft">{p.tagline}</p>
+                </div>
+              </div>
+
+              <div className="mt-auto border-t border-rule pt-5">
+                <div className="label">Latest episode</div>
+                <div className="mt-3 text-[14.5px] leading-snug text-ink">
                   {p.episodes[0].title}
                 </div>
-                <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ash">
-                  ep {p.episodes[0].number} · {p.episodes[0].duration}
+                <div className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
+                  <span>ep {p.episodes[0].number} · {p.episodes[0].duration}</span>
+                  <span className="inline-flex items-center gap-1 text-accent">
+                    Play <ArrowUpRight size={11} />
+                  </span>
                 </div>
               </div>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                <span className="border border-rule px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ash" style={{ borderRadius: 2 }}>
-                  Spotify
-                </span>
-                <span className="border border-rule px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ash" style={{ borderRadius: 2 }}>
-                  YouTube
-                </span>
-                <span className="border border-rule px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-ash" style={{ borderRadius: 2 }}>
-                  Apple
-                </span>
-              </div>
             </Link>
-          ))}
-        </div>
-      </div>
-    </section>
+          </StaggerItem>
+        ))}
+      </Stagger>
+    </EditorialSection>
   );
 }

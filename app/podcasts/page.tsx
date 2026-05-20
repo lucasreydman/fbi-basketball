@@ -1,8 +1,10 @@
+import { ArrowUpRight } from "lucide-react";
 import { PODCASTS } from "@/lib/data/podcasts";
 import { PageHeader } from "@/components/ui/page-header";
+import { Container } from "@/components/ui/container";
 
 export const metadata = {
-  title: "Podcasts · FBI",
+  title: "Podcasts",
   description: "Balls Deep, NBA Dynasty, Tank Me Later — three fantasy basketball pods, one feed.",
 };
 
@@ -10,84 +12,78 @@ export default function PodcastsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Three pods · one feed"
+        number="§ 04"
+        marker="Three pods · one feed"
         title={
           <>
-            Listen to <span className="italic text-orange">the people who win their leagues.</span>
+            Listen to the people who{" "}
+            <span className="italic text-accent">win their own leagues.</span>
           </>
         }
-        description="The flagship, the dynasty deep-dive, and the rebuild bible. Every episode on Spotify, Apple, and YouTube — free, no member-only nonsense."
+        lede="The flagship, the dynasty deep-dive, and the rebuild bible. Every episode on Spotify, Apple, and YouTube — free, no member-only nonsense."
       />
 
-      <div className="mx-auto max-w-5xl px-6 py-20">
+      <Container size="lg" className="py-20 md:py-28">
         {PODCASTS.map((p, i) => (
           <section
             key={p.slug}
             id={p.slug}
-            className={`scroll-mt-24 ${i > 0 ? "mt-24 border-t border-rule pt-20" : ""}`}
+            className={`scroll-mt-24 ${i > 0 ? "mt-24 border-t border-rule pt-24" : ""}`}
           >
-            <div className="grid gap-10 lg:grid-cols-[180px_1fr]">
+            <div className="grid gap-10 lg:grid-cols-[200px_1fr]">
               <div>
                 <div
-                  className="aspect-square w-full bg-gradient-to-br from-orange/30 to-orange-deep flex items-center justify-center font-display text-bone"
-                  style={{ borderRadius: 4, fontSize: "3.5rem", fontWeight: 500 }}
+                  className="aspect-square w-full border border-accent/40 bg-gradient-to-br from-[var(--accent-soft-bg)] to-transparent flex items-center justify-center font-display text-accent"
+                  style={{
+                    fontSize: "clamp(3rem, 7vw, 4.5rem)",
+                    fontWeight: 420,
+                    fontVariationSettings: '"opsz" 144',
+                  }}
                 >
                   {p.cover}
                 </div>
-                <div className="mt-4 flex flex-col gap-2">
-                  <a
-                    href={p.spotify}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block border border-rule px-3 py-2 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-ash transition-colors hover:border-orange hover:text-bone"
-                    style={{ borderRadius: 2 }}
-                  >
-                    Spotify
-                  </a>
-                  <a
-                    href={p.apple}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block border border-rule px-3 py-2 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-ash transition-colors hover:border-orange hover:text-bone"
-                    style={{ borderRadius: 2 }}
-                  >
-                    Apple
-                  </a>
-                  <a
-                    href={p.youtube}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block border border-rule px-3 py-2 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-ash transition-colors hover:border-orange hover:text-bone"
-                    style={{ borderRadius: 2 }}
-                  >
-                    YouTube
-                  </a>
+                <div className="mt-5 flex flex-col gap-2">
+                  {[
+                    { label: "Spotify", href: p.spotify },
+                    { label: "Apple", href: p.apple },
+                    { label: "YouTube", href: p.youtube },
+                  ].map((l) => (
+                    <a
+                      key={l.label}
+                      href={l.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center justify-between border border-rule px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:border-accent hover:text-ink"
+                    >
+                      {l.label}
+                      <ArrowUpRight size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </a>
+                  ))}
                 </div>
               </div>
 
               <div>
-                <h2
-                  className="display-h2 text-bone"
-                  style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)" }}
-                >
-                  {p.name}
-                </h2>
-                <p className="mt-3 text-[16px] leading-relaxed text-ash">{p.tagline}</p>
-                <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ash-dim">
-                  <span>Hosts · <span className="text-bone">{p.hosts.join(", ")}</span></span>
+                <div className="font-mono text-[10px] tabular text-ink-dim">
+                  {String(i + 1).padStart(2, "0")} / 03
+                </div>
+                <h2 className="display-5 mt-3 text-ink">{p.name}</h2>
+                <p className="mt-4 max-w-xl text-[16px] leading-[1.6] text-ink-soft">{p.tagline}</p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-2 border-y border-rule py-4 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
+                  <span>Hosts · <span className="text-ink">{p.hosts.join(", ")}</span></span>
                   <span>{p.cadence}</span>
+                  <span>{p.episodes.length}+ episodes</span>
                 </div>
 
-                <ul className="mt-9 divide-y divide-rule border-y border-rule">
+                <ul className="mt-10 divide-y divide-rule border-b border-rule">
                   {p.episodes.map((ep) => (
-                    <li key={ep.number} className="grid gap-3 py-5 sm:grid-cols-[80px_1fr_80px]">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-orange">
-                        ep {ep.number}
+                    <li key={ep.number} className="grid gap-3 py-7 sm:grid-cols-[80px_1fr_80px]">
+                      <span className="font-mono text-[11px] tabular text-accent">
+                        ep {String(ep.number).padStart(3, "0")}
                       </span>
                       <div>
-                        <div className="text-[15.5px] leading-snug text-bone">{ep.title}</div>
-                        <p className="mt-2 text-[13px] leading-relaxed text-ash">{ep.blurb}</p>
-                        <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ash-dim">
+                        <div className="display-3 text-[1.25rem] leading-snug text-ink">{ep.title}</div>
+                        <p className="mt-3 text-[14px] leading-[1.65] text-ink-soft">{ep.blurb}</p>
+                        <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
                           {ep.date} · {ep.duration}
                         </div>
                       </div>
@@ -96,9 +92,9 @@ export default function PodcastsPage() {
                           href={p.spotify}
                           target="_blank"
                           rel="noreferrer"
-                          className="font-mono text-[10px] uppercase tracking-[0.22em] text-ash transition-colors hover:text-orange"
+                          className="group inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:text-accent"
                         >
-                          Play →
+                          Play <ArrowUpRight size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </a>
                       </div>
                     </li>
@@ -108,7 +104,7 @@ export default function PodcastsPage() {
             </div>
           </section>
         ))}
-      </div>
+      </Container>
     </>
   );
 }

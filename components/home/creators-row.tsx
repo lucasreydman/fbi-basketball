@@ -1,77 +1,88 @@
+"use client";
+
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { CREATORS } from "@/lib/data/creators";
-import { SectionHeading } from "./section-heading";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
+import { EditorialHeader, EditorialSection } from "./editorial-section";
 
 export function CreatorsRow() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20">
-      <SectionHeading
-        eyebrow="The Voices"
+    <EditorialSection>
+      <EditorialHeader
+        number="§ 05"
+        marker="The voices"
         title={
           <>
-            Three creators. <span className="italic text-orange">Same standard.</span>
+            Three creators. <span className="italic text-accent">Same standard.</span>
           </>
         }
-        description="The people behind the rankings, the bracket, and every take that makes it onto the feed. Their individual work is worth subscribing to, separately."
+        lede="The people behind the rankings, the bracket, and every take that makes it onto the feed. Their individual work is worth subscribing to, separately."
         cta={{ href: "/creators", label: "Full bios" }}
       />
 
-      <div className="grid gap-px overflow-hidden border border-rule md:grid-cols-3" style={{ borderRadius: 3 }}>
-        {CREATORS.map((c) => (
-          <div key={c.slug} className="flex flex-col bg-canvas-soft p-6">
-            <div className="flex items-center gap-4">
-              <div
-                className="flex h-14 w-14 items-center justify-center bg-orange/12 font-display text-[24px] text-orange"
-                style={{ borderRadius: 999 }}
-              >
-                {c.name[0]}
-              </div>
-              <div>
-                <div className="display-h3 text-[1.25rem] text-bone">{c.name}</div>
-                <div className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-ash">
+      <Stagger className="mt-16 grid gap-px overflow-hidden border border-rule bg-rule md:grid-cols-3">
+        {CREATORS.map((c, i) => (
+          <StaggerItem key={c.slug}>
+            <div className="relative flex h-full flex-col gap-6 bg-canvas-soft p-7">
+              <div className="flex items-baseline justify-between">
+                <span className="font-mono text-[10px] tabular text-ink-dim">
+                  {String(i + 1).padStart(2, "0")} / 03
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute">
                   {c.handle}
+                </span>
+              </div>
+
+              <div className="flex items-start gap-5">
+                <div
+                  className="flex h-16 w-16 shrink-0 items-center justify-center border border-accent/30 bg-[var(--accent-soft-bg)] font-display text-[26px] text-accent"
+                  style={{ fontVariationSettings: '"opsz" 48' }}
+                >
+                  {c.name[0]}
+                </div>
+                <div>
+                  <h3 className="display-3 text-[1.6rem] text-ink">{c.name}</h3>
+                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                    {c.role.split(" · ").slice(0, 2).join(" · ")}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-orange">
-              {c.role.split(" · ").slice(0, 2).join(" · ")}
-            </div>
-            <p className="mt-3 flex-1 text-[13.5px] leading-relaxed text-ash">{c.bio}</p>
 
-            <div className="mt-5 flex flex-wrap gap-2 border-t border-rule pt-4">
-              {c.patreon && (
-                <a
-                  href={c.patreon}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-orange/12 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-orange transition-colors hover:bg-orange hover:text-obsidian"
-                  style={{ borderRadius: 2 }}
+              <p className="text-[14px] leading-[1.65] text-ink-soft flex-1">{c.bio}</p>
+
+              <div className="flex flex-wrap gap-2 border-t border-rule pt-5">
+                {c.patreon && (
+                  <a
+                    href={c.patreon}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 bg-accent/12 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent transition-colors hover:bg-accent hover:text-accent-ink"
+                  >
+                    Patreon <ArrowUpRight size={11} />
+                  </a>
+                )}
+                {c.twitter && (
+                  <a
+                    href={c.twitter}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 border border-rule px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:border-accent hover:text-ink"
+                  >
+                    X / Twitter <ArrowUpRight size={11} />
+                  </a>
+                )}
+                <Link
+                  href={`/creators#${c.slug}`}
+                  className="inline-flex items-center gap-1.5 border border-rule px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:border-accent hover:text-ink"
                 >
-                  Patreon
-                </a>
-              )}
-              {c.twitter && (
-                <a
-                  href={c.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="border border-rule px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-ash transition-colors hover:border-orange hover:text-bone"
-                  style={{ borderRadius: 2 }}
-                >
-                  X
-                </a>
-              )}
-              <Link
-                href={`/creators#${c.slug}`}
-                className="border border-rule px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-ash transition-colors hover:border-orange hover:text-bone"
-                style={{ borderRadius: 2 }}
-              >
-                Bio
-              </Link>
+                  Bio
+                </Link>
+              </div>
             </div>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
-    </section>
+      </Stagger>
+    </EditorialSection>
   );
 }
