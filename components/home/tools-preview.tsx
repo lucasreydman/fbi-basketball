@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRight, TrendingDown, TrendingUp } from "lucide-react";
 import { POINTS_PREVIEW, TRADE_PRESET } from "@/lib/data/rankings-preview";
-import { ALL_ACCESS_DEMO_URL } from "@/lib/nav";
+import { TOOL_POINTS, TOOL_TRADE_CALC } from "@/lib/nav";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { EditorialHeader, EditorialSection } from "./editorial-section";
 
@@ -25,7 +25,7 @@ export function ToolsPreview() {
             Built by people who <span className="italic text-accent">win their own leagues.</span>
           </>
         }
-        lede="Dynasty rankings (Points, Cats, Rookies) and a live-linked trade calculator powered by Matt's published values. The premium-curve math is fit to his own numbers (R² 96–99%) and re-snaps to every publish."
+        lede="ROS Points + 9-cat rankings and a live-linked trade calculator. The premium-curve math is anchored to the FBI board and re-snaps to every publish."
         cta={{ href: "/tools", label: "Open the toolkit" }}
       />
 
@@ -34,15 +34,13 @@ export function ToolsPreview() {
         <Reveal as="div" className="lg:col-span-7 bg-canvas-soft p-7 md:p-9">
           <div className="flex items-baseline justify-between">
             <div>
-              <div className="label label-accent">Dynasty Rankings · Points</div>
+              <div className="label label-accent">ROS Rankings · Points</div>
               <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                Published 2026-05-18 · v37 · 538 players matched
+                Published 2026-05-21 · v1 · 60 players · ROS values
               </div>
             </div>
             <Link
-              href={`${ALL_ACCESS_DEMO_URL}/rankings/points`}
-              target="_blank"
-              rel="noreferrer"
+              href={TOOL_POINTS}
               className="hidden sm:inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-mute transition-colors hover:text-accent"
             >
               Full board <ArrowUpRight size={13} />
@@ -137,9 +135,7 @@ export function ToolsPreview() {
           </div>
 
           <Link
-            href={`${ALL_ACCESS_DEMO_URL}/trade-calculator`}
-            target="_blank"
-            rel="noreferrer"
+            href={TOOL_TRADE_CALC}
             className="group mt-7 inline-flex w-full items-center justify-center gap-2 bg-accent py-3.5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] hover:bg-accent-bright active:scale-[0.98]"
           >
             Run your own trade
@@ -149,7 +145,7 @@ export function ToolsPreview() {
       </div>
 
       <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
-        Powered by Matt&apos;s published rankings — fbi-basketball hosts the front, NBA Dynasty holds the data
+        Free for the community · ROS-anchored · Snaps on every publish
       </p>
     </EditorialSection>
   );

@@ -1,24 +1,35 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { ALL_ACCESS_DEMO_URL, DISCORD_URL } from "@/lib/nav";
+import { DISCORD_URL, TOOL_POINTS, TOOL_CATS, TOOL_TRADE_CALC } from "@/lib/nav";
 import { PageHeader } from "@/components/ui/page-header";
 import { Container } from "@/components/ui/container";
 
 export const metadata = {
   title: "Tools",
   description:
-    "Dynasty rankings, trade calculator, and the rest of the toolkit. Free for the community.",
+    "ROS rankings, 9-cat rankings, and a trade calculator. Free for the FBI community.",
 };
 
 const TOOLS = [
   {
-    slug: "rankings",
-    title: "Dynasty Rankings",
+    slug: "rankings-points",
+    title: "ROS Points Rankings",
     blurb:
-      "Live boards for Points, 9-Cat, and Rookies. Drag-edited and re-published by Matt. Real player data, 538 NBA players, age + injury status pulled from official roster.",
-    surfaces: ["Points", "9-Cat", "Rookies"],
-    status: "Live · v37 published 2026-05-18",
-    href: `${ALL_ACCESS_DEMO_URL}/rankings/points`,
+      "Rest-of-season points board, tiered, with weekly publishes. The board the FBI community quotes — free, no email-gate.",
+    surfaces: ["Points", "Tiered", "Weekly"],
+    status: "Live",
+    href: TOOL_POINTS,
+    cta: "Open the board",
+    live: true,
+  },
+  {
+    slug: "rankings-cats",
+    title: "ROS 9-Cat Rankings",
+    blurb:
+      "Full 9-category board with per-stat ROS projections. Punts-friendly, stat-rate weighted. Updated alongside the points board.",
+    surfaces: ["9-cat", "Per-stat", "Tiered"],
+    status: "Live",
+    href: TOOL_CATS,
     cta: "Open the board",
     live: true,
   },
@@ -26,10 +37,10 @@ const TOOLS = [
     slug: "trade-calculator",
     title: "Trade Calculator",
     blurb:
-      "Premium-curve trade math anchored to the latest rankings. Pin a value to override the curve; everything else snaps to its new rank on every publish (R² 96–99%).",
-    surfaces: ["Points", "9-Cat"],
-    status: "Live · linked to v37",
-    href: `${ALL_ACCESS_DEMO_URL}/trade-calculator`,
+      "Premium-curve trade math anchored to the latest ROS board. Add players to either side, get a verdict, re-snaps on every publish.",
+    surfaces: ["Points", "Premium-curve", "Live-linked"],
+    status: "Live · linked to v1",
+    href: TOOL_TRADE_CALC,
     cta: "Run a trade",
     live: true,
   },
@@ -48,19 +59,8 @@ const TOOLS = [
     slug: "league-sync",
     title: "League Sync",
     blurb:
-      "One-click roster import from Yahoo, ESPN, Fantrax, Sleeper. Get a trade analysis for your actual team without re-typing 13 names.",
+      "One-click roster import from Yahoo, ESPN, Fantrax, Sleeper. Trade analysis for your actual team without re-typing 13 names.",
     surfaces: ["Yahoo", "ESPN", "Fantrax", "Sleeper"],
-    status: "Q4 2026",
-    href: "#",
-    cta: "Coming soon",
-    live: false,
-  },
-  {
-    slug: "draft-mock",
-    title: "Mock Draft Room",
-    blurb:
-      "Multi-user mock drafts that run on Matt's ADP. Bot-fill open seats, freeze the board for review, export to CSV.",
-    surfaces: ["12-team", "10-team", "8-team"],
     status: "Q4 2026",
     href: "#",
     cta: "Coming soon",
@@ -91,13 +91,13 @@ export default function ToolsPage() {
             <span className="italic text-accent">stop using a spreadsheet.</span>
           </>
         }
-        lede="Two tools live today, four on the roadmap. Everything anchored to Matt's published values and the FBI community's standards. Free, no email-gate."
+        lede="Three tools live today, three on the roadmap. Everything anchored to the FBI community's standards. Free, no email-gate."
       />
 
       <Container size="2xl" className="py-20 md:py-24">
         <div className="grid gap-px overflow-hidden border border-rule bg-rule md:grid-cols-2 lg:grid-cols-3">
           {TOOLS.map((t, i) => (
-            <ToolCard key={t.slug} index={i} tool={t} />
+            <ToolCard key={t.slug} index={i} tool={t} total={TOOLS.length} />
           ))}
         </div>
 
@@ -121,12 +121,12 @@ export default function ToolsPage() {
   );
 }
 
-function ToolCard({ tool, index }: { tool: (typeof TOOLS)[number]; index: number }) {
+function ToolCard({ tool, index, total }: { tool: (typeof TOOLS)[number]; index: number; total: number }) {
   return (
     <div className="group relative flex flex-col gap-6 bg-canvas-soft p-7 md:p-9 transition-colors hover:bg-surface">
       <div className="flex items-baseline justify-between">
         <span className="font-mono text-[10px] tabular text-ink-dim">
-          {String(index + 1).padStart(2, "0")} / {String(TOOLS.length).padStart(2, "0")}
+          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </span>
         <span className={`font-mono text-[10px] uppercase tracking-[0.22em] ${tool.live ? "text-accent" : "text-ink-dim"}`}>
           {tool.live ? "● Live" : "○ Roadmap"}
@@ -156,8 +156,6 @@ function ToolCard({ tool, index }: { tool: (typeof TOOLS)[number]; index: number
       {tool.live ? (
         <Link
           href={tool.href}
-          target="_blank"
-          rel="noreferrer"
           className="group/cta inline-flex h-11 items-center justify-center gap-2 bg-accent px-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-ink transition-[background-color,transform] hover:bg-accent-bright active:scale-[0.98]"
         >
           {tool.cta}

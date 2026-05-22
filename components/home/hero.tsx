@@ -59,8 +59,8 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 max-w-xl text-[17px] leading-[1.6] text-ink-soft"
             >
-              The FBI World Cup is the centerpiece. The dynasty rankings are
-              the boards everyone quotes. The Discord is the room behind both.
+              The FBI World Cup is the centerpiece. The ROS boards are
+              the rankings everyone quotes. The Discord is the room behind both.
               Eight years live, no funnel, no newsletter shake.
             </motion.p>
 

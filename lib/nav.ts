@@ -14,4 +14,8 @@ export const PATREON_BASE = "https://www.patreon.com";
 export const TWITTER_URL = "https://x.com/HiddenUpside";
 export const YOUTUBE_URL = "https://www.youtube.com/@FantasyBasketballInternational";
 export const EMAIL_URL = "mailto:fbi.leagues@gmail.com";
-export const ALL_ACCESS_DEMO_URL = "https://all-access-dynasty.vercel.app";
+
+// In-house tool routes
+export const TOOL_POINTS = "/tools/rankings/points";
+export const TOOL_CATS = "/tools/rankings/cats";
+export const TOOL_TRADE_CALC = "/tools/trade-calculator";
