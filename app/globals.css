@@ -76,12 +76,20 @@
   --color-accent:        var(--accent);
   --color-accent-bright: var(--accent-bright);
   --color-accent-deep:   var(--accent-deep);
+  --color-accent-soft:   var(--accent-soft-bg);
+  --color-accent-strong: var(--accent-deep);
   --color-accent-ink:    var(--accent-ink);
 
   --color-hardwood:    var(--hardwood);
   --color-leather:     var(--leather);
   --color-positive:    var(--positive);
   --color-negative:    var(--negative);
+
+  /* Tier ladder — mirrors the all-access ranks ladder so ported components render */
+  --color-tier-1: var(--tier-1);
+  --color-tier-2: var(--tier-2);
+  --color-tier-3: var(--tier-3);
+  --color-tier-4: var(--tier-4);
 
   /* Radius */
   --radius-none:  0;
@@ -128,6 +136,12 @@
   --leather:     oklch(0.45 0.080 60);
   --positive:    oklch(0.74 0.140 145);
   --negative:    oklch(0.65 0.190 25);
+
+  /* Tier color ladder (matches the all-access ports) */
+  --tier-1: oklch(0.78 0.16 75);    /* gold */
+  --tier-2: oklch(0.72 0.15 155);   /* green */
+  --tier-3: oklch(0.68 0.16 235);   /* blue */
+  --tier-4: oklch(0.70 0.18 305);   /* violet */
 }
 
 * {

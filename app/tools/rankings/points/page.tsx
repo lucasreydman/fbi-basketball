@@ -1,123 +1,85 @@
-import { PageHeader } from "@/components/ui/page-header";
-import { Container } from "@/components/ui/container";
 import { getPublicSupabase } from "@/lib/supabase";
-import { TierChip, ChangeIndicator } from "@/components/tool/tier-chip";
-import { LastUpdatedChip } from "@/components/tool/last-updated";
+import { SubscribeToPublishes } from "@/components/realtime/subscribe-to-publishes";
+import { VersionChip } from "@/components/shell/version-chip";
+import { ToolPageHeader } from "@/components/shell/tool-page-header";
+import { TierChip, PlayerCell } from "@/components/subscriber/ranking-row";
 
 export const metadata = {
   title: "ROS Points Rankings",
-  description: "Rest-of-season points rankings for redraft fantasy basketball — anchored to the FBI board.",
+  description: "Rest-of-season points rankings for redraft fantasy basketball — the FBI board.",
 };
 
 export const revalidate = 60;
 
-type Row = {
-  rank: number;
-  tier: number | null;
-  value: number | null;
-  change_n: number | null;
-  players: { full_name: string; team: string | null; position: string | null; age: number | null }
-    | { full_name: string; team: string | null; position: string | null; age: number | null }[]
-    | null;
-};
-
 export default async function PointsRankingsPage() {
-  const sb = getPublicSupabase();
-  const { data: list } = await sb
+  const supabase = getPublicSupabase();
+  const { data: list } = await supabase
     .from("ranked_lists")
     .select("id, version, published_at, notes")
-    .eq("surface", "points")
-    .eq("status", "published")
-    .maybeSingle();
+    .eq("surface", "points").eq("status", "published").maybeSingle();
 
-  const { data: entries } = await sb
+  const { data: entries } = await supabase
     .from("ranking_entries")
-    .select("rank, tier, value, change_n, players(full_name, team, position, age)")
+    .select("rank, tier, value, player_id, players(full_name, team, position)")
     .eq("list_id", list?.id ?? "00000000-0000-0000-0000-000000000000")
     .order("rank", { ascending: true });
 
-  const rows = (entries ?? []) as unknown as Row[];
+  const rows = ((entries ?? []) as unknown as Array<{
+    rank: number; tier: number | null; value: number | null; player_id: number;
+    players: { full_name: string; team: string | null; position: string | null } | { full_name: string; team: string | null; position: string | null }[] | null;
+  }>);
 
   return (
-    <>
-      <PageHeader
-        number="§ 03·1"
-        marker="Tool · Points"
-        title={
-          <>
-            ROS Points <span className="italic text-accent">Rankings</span>
-          </>
+    <div className="mx-auto max-w-3xl px-6 py-12">
+      <ToolPageHeader
+        eyebrow="Rankings"
+        title="Points"
+        subtitle={list?.notes ?? undefined}
+        rightSlot={
+          list && (
+            <VersionChip
+              version={list.version}
+              publishedAt={list.published_at ? new Date(list.published_at) : undefined}
+            />
+          )
         }
-        lede={list?.notes ?? "Rest-of-season points rankings. Anchored to the FBI board, updated weekly."}
       />
+      <SubscribeToPublishes surface="points" />
 
-      <Container size="2xl" className="py-16 md:py-20">
-        <div className="mb-8 flex items-center justify-between border-b border-rule pb-5">
-          <div className="flex items-baseline gap-4">
-            <span className="label">Published</span>
-            {list && <LastUpdatedChip version={list.version} publishedAt={list.published_at} />}
-          </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
-            {rows.length} players
-          </span>
+      <div className="overflow-hidden rounded-xl border border-rule bg-canvas-soft">
+        <div className="flex items-center gap-4 border-b border-rule bg-surface/40 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-mute">
+          <span className="w-8 text-right">#</span>
+          <span className="flex-1">Player</span>
+          <span className="w-12">Pos</span>
+          <span className="w-10 text-center">T</span>
+          <span className="w-20 text-right">Value</span>
         </div>
-
-        <div className="overflow-x-auto border border-rule">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-rule bg-canvas">
-                <th className="px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">#</th>
-                <th className="px-3 py-3 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Tier</th>
-                <th className="px-3 py-3 text-left font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Player</th>
-                <th className="px-3 py-3 text-left font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Team</th>
-                <th className="px-3 py-3 text-left font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Pos</th>
-                <th className="px-3 py-3 text-right font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Age</th>
-                <th className="px-3 py-3 text-right font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Δ</th>
-                <th className="px-4 py-3 text-right font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((e) => {
-                const p = Array.isArray(e.players) ? e.players[0] : e.players;
-                return (
-                  <tr key={e.rank} className="almanac-row">
-                    <td className="px-4 py-3 font-mono text-[12px] tabular text-ink-mute">
-                      {String(e.rank).padStart(2, "0")}
-                    </td>
-                    <td className="px-3 py-3 text-center">
-                      <TierChip tier={e.tier} />
-                    </td>
-                    <td className="px-3 py-3 font-display text-[16px] text-ink">
-                      {p?.full_name}
-                    </td>
-                    <td className="px-3 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
-                      {p?.team}
-                    </td>
-                    <td className="px-3 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-dim">
-                      {p?.position}
-                    </td>
-                    <td className="px-3 py-3 text-right font-mono text-[12px] tabular text-ink-soft">
-                      {p?.age?.toFixed(1) ?? "—"}
-                    </td>
-                    <td className="px-3 py-3 text-right">
-                      <ChangeIndicator delta={e.change_n ?? 0} />
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <span className="font-display text-[18px] text-accent tabular" style={{ fontVariationSettings: '"opsz" 36' }}>
-                        {e.value}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-
-        <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-dim">
-          Free for the community · Updated weekly by FBI
-        </p>
-      </Container>
-    </>
+        {rows.map((e, i) => {
+          const p = Array.isArray(e.players) ? e.players[0] : e.players;
+          return (
+            <div
+              key={e.rank}
+              className={`flex items-center gap-4 border-b border-rule-soft px-4 py-2.5 transition-colors hover:bg-surface/60 last:border-b-0 ${i % 2 === 1 ? "bg-canvas-soft/40" : ""}`}
+            >
+              <span className="w-8 text-right font-mono text-xs tabular-nums text-ink-mute">
+                {e.rank}
+              </span>
+              <span className="flex-1">
+                <PlayerCell id={e.player_id} name={p?.full_name ?? ""} team={p?.team ?? null} />
+              </span>
+              <span className="w-12 text-xs uppercase tracking-wider text-ink-dim">
+                {p?.position}
+              </span>
+              <span className="w-10 text-center">
+                <TierChip tier={e.tier} />
+              </span>
+              <span className="w-20 text-right font-mono text-sm tabular-nums text-ink">
+                {e.value}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }

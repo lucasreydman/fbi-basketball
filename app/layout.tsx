@@ -7,6 +7,7 @@ import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 
 import "./globals.css";
+import { Toaster } from "sonner";
 import { SiteHeader } from "@/components/shell/site-header";
 import { SiteFooter } from "@/components/shell/site-footer";
 import { SmoothScroll } from "@/components/shell/smooth-scroll";
@@ -47,6 +48,18 @@ export default function RootLayout({
         <SiteHeader />
         <main className="relative z-[2] flex flex-1 flex-col">{children}</main>
         <SiteFooter />
+        <Toaster
+          position="bottom-right"
+          theme="dark"
+          toastOptions={{
+            style: {
+              background: "var(--surface-2)",
+              border: "1px solid var(--rule)",
+              color: "var(--ink)",
+              fontFamily: "var(--font-sans)",
+            },
+          }}
+        />
       </body>
     </html>
   );

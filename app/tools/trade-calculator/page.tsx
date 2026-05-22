@@ -1,7 +1,7 @@
-import { PageHeader } from "@/components/ui/page-header";
-import { Container } from "@/components/ui/container";
 import { getPublicSupabase } from "@/lib/supabase";
-import { TradeCalculator, type Asset } from "@/components/tool/trade-calculator";
+import { SubscribeToTradeCalc } from "@/components/realtime/subscribe-to-trade-calc";
+import { TradeCalculator, type Asset } from "@/components/subscriber/trade-calculator";
+import { ToolPageHeader } from "@/components/shell/tool-page-header";
 import type { PremiumCurve } from "@/lib/data/types";
 
 export const metadata = {
@@ -19,81 +19,45 @@ const FALLBACK_CURVE: PremiumCurve = {
   max_trade: 200,
 };
 
-export default async function TradeCalculatorPage() {
+export default async function TradeCalcPage() {
   const sb = getPublicSupabase();
+  const { data: calc } = await sb.from("trade_calc_versions")
+    .select("id, version, published_at, premium_curve").eq("status", "published").maybeSingle();
+  const { data: pointsList } = await sb.from("ranked_lists")
+    .select("version").eq("surface", "points").eq("status", "published").maybeSingle();
 
-  const { data: calc } = await sb
-    .from("trade_calc_versions")
-    .select("id, version, published_at, premium_curve")
-    .eq("status", "published")
-    .maybeSingle();
-
-  const { data: pointsList } = await sb
-    .from("ranked_lists")
-    .select("version")
-    .eq("surface", "points")
-    .eq("status", "published")
-    .maybeSingle();
-
-  let assets: Asset[] = [];
+  const assets: Asset[] = [];
   if (calc) {
-    const { data: vals } = await sb
-      .from("trade_values")
-      .select("player_id, value, players(full_name, team, position)")
-      .eq("calc_id", calc.id)
-      .order("value", { ascending: false });
-
-    assets = (
-      (vals ?? []) as unknown as Array<{
-        player_id: number;
-        value: number;
-        players:
-          | { full_name: string; team: string | null; position: string | null }
-          | { full_name: string; team: string | null; position: string | null }[]
-          | null;
-      }>
-    ).map((v) => {
+    const { data: vals } = await sb.from("trade_values")
+      .select("player_id, value, players(full_name, team)").eq("calc_id", calc.id);
+    for (const v of ((vals ?? []) as unknown as Array<{
+      player_id: number; value: number;
+      players: { full_name: string; team: string | null } | { full_name: string; team: string | null }[] | null;
+    }>)) {
       const p = Array.isArray(v.players) ? v.players[0] : v.players;
-      return {
-        id: v.player_id,
-        label: p?.full_name ?? "Unknown",
-        sub: [p?.team, p?.position].filter(Boolean).join(" · "),
+      assets.push({
+        kind: "player", id: v.player_id,
+        label: p?.full_name ?? "Unknown", sub: p?.team ?? "",
         value: Number(v.value),
-      };
-    });
+      });
+    }
   }
 
   return (
-    <>
-      <PageHeader
-        number="§ 03·3"
-        marker="Tool · Trade calc"
-        title={
-          <>
-            Trade <span className="italic text-accent">Calculator</span>
-          </>
-        }
-        lede="Premium-curve trade math anchored to the FBI board. Add players to either side — values re-snap on every publish."
+    <div className="mx-auto max-w-4xl px-6 py-12">
+      <ToolPageHeader
+        eyebrow="Tool"
+        title="Trade Calculator"
+        subtitle="Premium-curve adjusted. Always anchored to the latest published rankings — never drifts."
       />
-
-      <Container size="2xl" className="py-16 md:py-20">
-        <TradeCalculator
-          assets={assets}
-          premium={(calc?.premium_curve as PremiumCurve) ?? FALLBACK_CURVE}
-          calcVersion={calc?.version ?? 0}
-          pointsVersion={pointsList?.version ?? 0}
-          publishedAt={calc?.published_at ?? null}
-        />
-
-        <div className="mt-12 border border-rule p-6 bg-canvas-soft">
-          <div className="label">How it works</div>
-          <p className="mt-3 max-w-2xl text-[14px] leading-[1.65] text-ink-soft">
-            Raw value is the straight sum of trade values. Premium-adjusted applies an FBI curve that
-            rewards concentrated star power — a single 95 is worth more than three 35s. The verdict
-            compares premium-adjusted totals across both sides.
-          </p>
-        </div>
-      </Container>
-    </>
+      <SubscribeToTradeCalc />
+      <TradeCalculator
+        assets={assets}
+        premium={(calc?.premium_curve as PremiumCurve) ?? FALLBACK_CURVE}
+        calcVersion={calc?.version ?? 0}
+        pointsVersion={pointsList?.version ?? 0}
+        publishedAt={calc?.published_at ?? null}
+      />
+    </div>
   );
 }

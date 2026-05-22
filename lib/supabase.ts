@@ -10,8 +10,18 @@ export function getPublicSupabase() {
   );
 }
 
-// Service-role client — used by seed scripts + future admin writes.
-// Never import this from a client component.
+// Browser client — for realtime channel subscriptions on subscriber pages.
+// Wrapped so it can also be called from client components ("use client").
+export function getBrowserSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false } },
+  );
+}
+
+// Service-role client — used by seed scripts + admin writes.
+// Never import this from a "use client" module.
 export function getAdminSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
